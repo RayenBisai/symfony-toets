@@ -1,0 +1,208 @@
+🚀 ULTIMATIEVE SYMFONY CRUD VOORBEREIDING
+==========================================
+
+MORGEN JE EXAMEN? LEES DIT EERST (5 MIN)!
+
+---
+
+ESSENTIALS (ONTHOUD DEZE!)
+===========================
+
+1. ENTITY (Model)
+   └─ PHP klasse met #[ORM\...] attributes
+   └─ Properties = database kolommen
+   └─ Voorbeeld: Category.php
+
+2. RELATIE (Connection)
+   └─ OneToMany: 1 → veel  (Category → veel Products)
+   └─ ManyToOne: veel → 1  (Product → 1 Category)
+   └─ Staat in beide entities!
+
+3. MIGRATIE (Database versioning)
+   └─ Weg: Entity → make:migration → doctrine:migrations:migrate → Database
+   └─ SQL tabellen worden AUTOMATISCH aangemaakt
+
+4. REPOSITORY (Database queries)
+   └─ Custom SELECT methodes
+   └─ Used in Controller
+
+5. CONTROLLER (Routes)
+   └─ 5 actions: CREATE, READ (2x), UPDATE, DELETE
+   └─ Haalt data via Repository
+   └─ Geeft terug naar Template
+
+6. FORM (Validatie & HTML)
+   └─ FormType class
+   └─ Valideert automatisch
+
+7. TEMPLATE (Weergave)
+   └─ Twig template files
+   └─ Master = lijst, Detail = 1 item
+
+---
+
+QUICKEST PATH TO SUCCESS
+========================
+
+1. SETUP (10 min)
+   - .env database URL in stellen
+   - composer install
+   - php bin/console doctrine:migrations:migrate
+   - symfony serve
+
+2. EXPLORE (10 min)
+   - Open http://localhost:8000
+   - Klik rond, test alle functies
+   - Bekijk source code van entities
+
+3. LEARN (30 min)
+   - Lees STUDY_GUIDE.md (Entities → Controllers → Templates)
+   - Per concept: theorie + voorbeeld in project
+
+4. PRACTICE (1 uur)
+   - HOW_TO_BUILD_CRUD.md volgen
+   - Zelf "Comments" CRUD bouwen
+   - Database via migrations
+
+5. REVIEW (10 min)
+   - CHEAT_SHEET.md als reference
+   - SELF_TEST.md checken
+
+---
+
+COPY/PASTE TEMPLATES
+====================
+
+Kopieër deze voor snel werken:
+
+ENTITY:
+```php
+#[ORM\Entity]
+#[ORM\Table(name: 'your_table')]
+class YourEntity {
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
+    #[ORM\Column(length: 100)]
+    private ?string $name = null;
+    // + getters/setters
+}
+```
+
+ONETOMANY:
+```php
+#[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'category')]
+private Collection $products;
+```
+
+MANYTOONE:
+```php
+#[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'products')]
+private ?Category $category = null;
+```
+
+CONTROLLER CREATE:
+```php
+#[Route('/create', name: 'create', methods: ['GET', 'POST'])]
+public function create(Request $r, EntityManagerInterface $em) {
+    $obj = new Entity();
+    $form = $this->createForm(EntityType::class, $obj);
+    $form->handleRequest($r);
+    if ($form->isSubmitted() && $form->isValid()) {
+        $em->persist($obj);
+        $em->flush();
+        return $this->redirectToRoute('index');
+    }
+    return $this->render('form.html.twig', ['form' => $form]);
+}
+```
+
+---
+
+GOLDEN RULES
+============
+
+1. ✅ Entity EERST - definieer data model
+2. ✅ Migratie - zet in database
+3. ✅ Controller - zet routes
+4. ✅ Template - zet HTML
+5. ✅ Form - zet validatie
+
+⚠️ ONTHOUDEN:
+- $entityManager->persist($obj)
+- $entityManager->flush()
+- csrf_token() in DELETE forms
+- path('route_name', {id: value})
+- {% for item in items %} in Twig
+
+---
+
+COMMANDO'S DIE JE NODIG HEBT
+=============================
+
+```bash
+# Start (after setup)
+symfony serve
+
+# Entity → Database
+php bin/console make:migration
+php bin/console doctrine:migrations:migrate
+
+# Debug
+php bin/console debug:router
+php bin/console debug:autowiring
+
+# Database commands
+php bin/console doctrine:database:create
+php bin/console doctrine:database:drop --force
+
+# Reset alles
+php bin/console doctrine:database:drop --force
+php bin/console doctrine:database:create
+php bin/console doctrine:migrations:migrate
+```
+
+---
+
+EXAMEN GAMEPLAN
+================
+
+DINSDAG (VANDAAG):
+- [ ] Zet dit project op
+- [ ] Test alles
+- [ ] Lees STUDY_GUIDE.md
+
+WOENSDAG OCHTEND:
+- [ ] Herhaal key concepts
+- [ ] Bekijk CHEAT_SHEET.md
+- [ ] Test jezelf met SELF_TEST.md
+
+WOENSDAG EXAMEN:
+- [ ] Keep calm 😌
+- [ ] Entity EERST
+- [ ] Test stap voor stap
+- [ ] CRUD mag buiten gewone orde!
+
+---
+
+TOP 10 DINGEN NIET VERGETEN
+=============================
+
+1. #[ORM\...] attributes in Entity
+2. Migratie draaien ELKE keer entity wijzigt
+3. Entity converteren → Database tabel
+4. OneToMany + ManyToOne in BEIDE entities
+5. Repository queries met QueryBuilder
+6. Controller + Dependency injection
+7. Form validatie + field types
+8. EntityManager persist + flush
+9. CSRF token in delete form
+10. {% for %} loops in Twig
+
+---
+
+VEEL STERKTE! 💪
+
+Je bent ready. Nu gaan! 🚀

@@ -1,0 +1,28 @@
+#!/usr/bin/env php
+<?php
+
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Dotenv\Dotenv;
+
+if (!is_file(dirname(__DIR__).'/vendor/autoload_runtime.php')) {
+    throw new LogicException('Symfony Runtime is not installed. Try running "composer require symfony/runtime".');
+}
+
+require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
+
+(new Dotenv())->bootEnv(dirname(__DIR__).'/.env');
+
+if ($_SERVER['APP_DEBUG']) {
+    umask(0000);
+}
+
+require_once dirname(__DIR__).'/src/Kernel.php';
+
+$input = new ArgvInput();
+$env = $input->getParameterOption(['--env', '-e'], $_SERVER['SYMFONY_ENV'] ?? 'dev');
+$debug = ($_SERVER['SYMFONY_DEBUG'] ?? ('prod' !== $env)) && !$input->hasParameterOption('--no-debug', true);
+
+$kernel = new Kernel($env, $debug);
+$application = new Application($kernel);
+$application->run($input);

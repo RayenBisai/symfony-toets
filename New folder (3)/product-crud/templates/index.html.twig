@@ -1,0 +1,52 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="jumbotron bg-light p-5 rounded-lg">
+    <h1 class="display-4">👋 Welkom!</h1>
+    <p class="lead">Dit is een complete Symfony CRUD applicatie gemaakt voor je examen voorbereiding.</p>
+    
+    <hr class="my-4">
+    
+    <p>Hieronder vind je alle geïmplementeerde technieken die je nodig hebt:</p>
+    
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">📦 Producten Management</h5>
+                    <p class="card-text">Volledig CRUD systeem voor producten met categorieën</p>
+                    <a href="{{ path('product_index') }}" class="btn btn-primary">Ga naar Producten →</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">📂 Categorieën Management</h5>
+                    <p class="card-text">Beheer je productcategorieën met OneToMany relaties</p>
+                    <a href="{{ path('category_index') }}" class="btn btn-primary">Ga naar Categorieën →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading">✅ Wat kun je hier leren:</h4>
+                <ul class="mb-0">
+                    <li><strong>Entities:</strong> Category.php en Product.php (Models)</li>
+                    <li><strong>Controllers:</strong> ProductController en CategoryController met alle CRUD routes</li>
+                    <li><strong>Relaties:</strong> OneToMany/ManyToOne tussen Category en Product</li>
+                    <li><strong>Forms:</strong> ProductType en CategoryType formulieren</li>
+                    <li><strong>Templates:</strong> Twig templates voor master/detail views</li>
+                    <li><strong>Database:</strong> Migraties voor tabel creatie</li>
+                    <li><strong>Repository:</strong> Custom query methods</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Producten{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h1>📦 Producten</h1>
+    </div>
+    <div class="col text-end">
+        <a href="{{ path('product_create') }}" class="btn btn-success">+ Nieuw Product</a>
+    </div>
+</div>
+
+{% if products is empty %}
+    <div class="alert alert-info">Geen producten gevonden. <a href="{{ path('product_create') }}">Maak er een aan!</a></div>
+{% else %}
+    <div class="row">
+        {% for product in products %}
+            <div class="col-md-4 mb-4">
+                <div class="card product-card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text text-muted">{{ product.description|slice(0, 50) }}...</p>
+                        
+                        <div class="mb-3">
+                            <span class="badge bg-primary">{{ product.category.name }}</span>
+                            <span class="badge bg-info">€{{ product.price }}</span>
+                            <span class="badge bg-warning">Voorraad: {{ product.quantity }}</span>
+                        </div>
+                        
+                        <div class="btn-group d-grid gap-2" role="group">
+                            <a href="{{ path('product_show', {id: product.id}) }}" class="btn btn-sm btn-info">View</a>
+                            <a href="{{ path('product_edit', {id: product.id}) }}" class="btn btn-sm btn-warning">Edit</a>
+                            <form method="POST" action="{{ path('product_delete', {id: product.id}) }}" style="display:inline;"
+                                  onsubmit="return confirm('Zeker weten?')">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ product.id) }}">
+                                <button type="submit" class="btn btn-sm btn-danger w-100">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+{% endblock %}

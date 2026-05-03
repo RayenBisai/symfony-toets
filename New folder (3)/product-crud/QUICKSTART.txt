@@ -1,0 +1,67 @@
+QUICK START GUIDE - Product CRUD
+================================
+
+⚡ VOLGENDE STAPPEN (in deze volgorde!):
+
+1. DATABASE AANMAKEN
+   - Open PHPMyAdmin: http://localhost/phpmyadmin
+   - Maak nieuwe database: "product_crud"
+   
+   OF via commando:
+   mysql -u root -p
+   CREATE DATABASE product_crud CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+2. .ENV INSTELLEN
+   - Edit .env file
+   - Zet je database URL (controleer username/password)
+   DATABASE_URL="mysql://root:@127.0.0.1:3306/product_crud"
+
+3. DEPENDENCIES INSTALLEREN
+   cd product-crud
+   composer install
+
+4. MIGRATIES UITVOEREN (creëert tabellen!)
+   php bin/console doctrine:migrations:migrate
+
+5. SERVER STARTEN
+   symfony serve
+   
+   (of: php -S localhost:8000 -t public)
+
+6. BROWSER OPENEN
+   http://localhost:8000
+
+✅ KLAAR! Navigeer naar:
+   - Producten: http://localhost:8000/product/
+   - Categorieën: http://localhost:8000/category/
+
+COMMANDO'S:
+===========
+
+Nieuwe categorie aanmaken: http://localhost:8000/category/create/new
+Nieuw product aanmaken: http://localhost:8000/product/create/new
+
+Alle routes zien:
+php bin/console debug:router
+
+Database resetten (wist alles!):
+php bin/console doctrine:database:drop --force
+php bin/console doctrine:database:create
+php bin/console doctrine:migrations:migrate
+
+PROBLEMEN?
+==========
+- Check .env file DATABASE_URL
+- Check PHP version (min 8.1)
+- Check MySQL server draait
+- Check composer install werkte
+
+VOLGENDE KEER (examen):
+======================
+1. Entity aanmaken
+2. Migratie aanmaken
+3. Controller aanmaken
+4. Form aanmaken
+5. Templates aanmaken
+
+Zie README.md voor uitgebreide documentatie!
